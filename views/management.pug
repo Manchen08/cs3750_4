@@ -1,0 +1,15 @@
+extends layout
+
+block content        
+
+        link(href='stylesheets/snippet.css', rel='stylesheet')
+        div#title
+            h1 #{title}
+        div#mmleftpanel
+            div#username
+                h1  #{user}
+            div#stocks   
+            div#save
+        div#mmrightpanel
+            div#chart
+        script(src="../public/javascripts/moneyManagement.js")
