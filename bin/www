@@ -6,11 +6,8 @@
 
 var app = require('../app');
 const sessionStore = require('../app').sessionStore;
-const passportSocketIo = require('passport.socketio');
 var debug = require('debug')('project2:server');
 var http = require('http');
-var socket = require('socket.io');
-var socketController = require('../routes/socket');
 const cookieParser = require('cookie-parser');
 
 /**
@@ -25,24 +22,6 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-var io = socket(server);
-
-// wire up socket.io and passport
-// makes the socket.request.user object available inside of
-// io.on('connection', socket => {
-// the user object has the name and username properties of the
-// logged in user
-// also makes it so socket.io requests can only come from a
-// logged in session
-io.use(passportSocketIo.authorize({
-  cookieParser: cookieParser, // the same middleware you registrer in express
-  key: 'connect.sid',         // the name of the cookie where express/connect stores its session_id
-  secret: 'secret',           // the secret to parse the cookie, needs to match what express-session uses
-  store: sessionStore,        // requires a sessionstore, not a memorystore
-}));
-
-socketController(io);
-
 
 /**
  * Listen on provided port, on all network interfaces.
