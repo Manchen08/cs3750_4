@@ -32,4 +32,5 @@ router.get('/userstocks', (req, res, next) => {
     res({stocks:data.stocks});
   })
 });
+
 module.exports = router;
