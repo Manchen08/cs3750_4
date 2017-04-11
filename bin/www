@@ -1,0 +1,113 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+const sessionStore = require('../app').sessionStore;
+const passportSocketIo = require('passport.socketio');
+var debug = require('debug')('project2:server');
+var http = require('http');
+var socket = require('socket.io');
+var socketController = require('../routes/socket');
+const cookieParser = require('cookie-parser');
+
+/**
+ * Get port from environment and store in Express.
+ */
+
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+
+var server = http.createServer(app);
+var io = socket(server);
+
+// wire up socket.io and passport
+// makes the socket.request.user object available inside of
+// io.on('connection', socket => {
+// the user object has the name and username properties of the
+// logged in user
+// also makes it so socket.io requests can only come from a
+// logged in session
+io.use(passportSocketIo.authorize({
+  cookieParser: cookieParser, // the same middleware you registrer in express
+  key: 'connect.sid',         // the name of the cookie where express/connect stores its session_id
+  secret: 'secret',           // the secret to parse the cookie, needs to match what express-session uses
+  store: sessionStore,        // requires a sessionstore, not a memorystore
+}));
+
+socketController(io);
+
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
