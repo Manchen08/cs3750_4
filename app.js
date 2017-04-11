@@ -15,13 +15,17 @@ var users = require('./routes/users');
 
 var app = express();
 
+
 // mongoose setup
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/project4');
 
+
 // create a persisent session store re-using our mongoose connection
 // It creates/uses a collection called "sessions" by default
 const sessionStore = new MongoStore({ mongooseConnection: mongoose.connection });
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -82,6 +86,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
