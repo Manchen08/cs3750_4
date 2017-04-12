@@ -15,6 +15,11 @@ nav.navbar.navbar-default
           //- a(href='/') Home
         li
           a(href='/addStock') Add Stock
+        if isLoggedIn
+          li
+            a(href='/management') Money management
+          li
+            a(href='/cheatstocks') Add cheat stocks TEMP
       ul.nav.navbar-nav.navbar-right
         if isLoggedIn
           li
