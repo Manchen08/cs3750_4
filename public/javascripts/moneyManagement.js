@@ -37,8 +37,13 @@ function changedpercent(sender){
     console.log(def.value);
     if(def.value == 0)
     {
+        //if the value is greater than the old value, reset it to the old value
         if(sender.srcElement.value > sender.srcElement.oldValue){
             sender.srcElement.value = sender.srcElement.oldValue;
+        } else {
+            //if value is less than the old value, then add it to the money Remaining, and move the slider
+            def.value += sender.srcElement.oldValue - sender.srcElement.value;
+            moneyRemaining = def.value;
         }
     }
 }
