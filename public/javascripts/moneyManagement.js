@@ -37,13 +37,13 @@ function changedpercent(sender){
     console.log(sender.srcElement.value + " : " + def.value +" : "+ sender.srcElement.oldValue);
     if(def.value == 0)
     {
-        console.log("here");
+        
         //if the value is greater than the old value, reset it to the old value
-        if(sender.srcElement.value > sender.srcElement.oldValue){
+        if(Number(sender.srcElement.value) > Number(sender.srcElement.oldValue)){
             sender.srcElement.value = sender.srcElement.oldValue;
         } else {
             //if value is less than the old value, then add it to the money Remaining, and move the slider
-            def.value += sender.srcElement.oldValue - sender.srcElement.value;
+            def.value = sender.srcElement.oldValue - sender.srcElement.value;
             moneyRemaining = def.value;
         }
     } else {
@@ -51,20 +51,17 @@ function changedpercent(sender){
         {
             if(def.value - (sender.srcElement.value - sender.srcElement.oldValue) < 0)
             {
-                console.log("here1")
+
                 sender.srcElement.value = Number(def.value) + Number(sender.srcElement.oldValue);
                 def.value = 0;
                 moneyRemaining = 0;
             } else {
-                console.log("here2");
-                //sender.srcElement.value = sender.srcElement.oldValue;
+
                 def.value -= sender.srcElement.value- sender.srcElement.oldValue;
                 moneyRemaining = def.value;
             }
         } else {
-            console.log((Number(sender.srcElement.oldValue) - Number(sender.srcElement.value)))
             def.value = Number(def.value) + (Number(sender.srcElement.oldValue) - Number(sender.srcElement.value));
-            console.log(def.value);
             moneyRemaining = def.value;
         }
     }
