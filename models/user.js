@@ -23,6 +23,7 @@ const UserSchema = mongoose.Schema({
         default: Date.now
     },
     stocks: [{
+        fullname: String,
         stock: String,
         percent: Number   
     }]

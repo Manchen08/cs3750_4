@@ -2,14 +2,20 @@ extends layout
 
 block content        
 
-        link(href='stylesheets/snippet.css', rel='stylesheet')
+        link(href='../public/stylesheets/management.css', rel='stylesheet')
         div#title
             h1 #{title}
         div#mmleftpanel
             div#username
                 h1  #{user}
+            hr
+            h3 Money Remaining:
+            input(type="range" min="0" max="100" value="100")#defaultMoney.sliders
             div#stocks   
             div#save
         div#mmrightpanel
-            div#chart
+            div#chart(style="height: 400px;")
+        script(src="https://code.highcharts.com/highcharts.js")
+        script(src="https://code.highcharts.com/highcharts-3d.js")
+        script(src="https://code.highcharts.com/modules/exporting.js")
         script(src="../public/javascripts/moneyManagement.js")

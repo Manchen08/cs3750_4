@@ -1,4 +1,88 @@
 
 
+
+let myStocks = [];
+let moneyRemaining = 100;
+
 //get users stocks
-console.log(myStocks);
+$.get('./userstocks', (data) =>{
+    console.log(data);
+    var myElem = document.querySelector('#stocks');
+    var myElemTotal = document.querySelector('#defaultMoney');
+    for(var i = 0; i < data.stocks.length;i++)
+    {
+        var range = document.createElement("input");
+        range.type = "range";
+        range.className = "sliders";
+        range.min = "0";
+        range.max = "100";
+        range.value = data.stocks[i].percent;
+        range.id = data.stocks[i].stock;
+        range.onchange = changedpercent;
+        range.onfocus = sliderfocus;
+        myElem.appendChild(range);
+        //set range element and remove from total money
+        moneyRemaining = moneyRemaining - data.stocks[i].percent;
+        myElemTotal.value = moneyRemaining;
+        //create range input for stock
+    }
+
+}).fail(() => {
+    console.log("error in retreiving stocks");
+});
+
+function changedpercent(sender){
+
+    var def = document.querySelector('#defaultMoney');
+    console.log(def.value);
+    if(def.value == 0)
+    {
+        if(sender.srcElement.value > sender.srcElement.oldValue){
+            sender.srcElement.value = sender.srcElement.oldValue;
+        }
+    }
+}
+
+function sliderfocus(sender){
+    sender.srcElement.oldValue = sender.srcElement.value;
+}
+
+function reloadChart(){
+    Highcharts.chart('chart', {
+    chart: {
+        type: 'pie',
+        options3d: {
+            enabled: true,
+            alpha: 45,
+            beta: 0
+        }
+    },
+    title: {
+        text: 'Total Capital Distribution'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            depth: 35,
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}'
+            }
+        }
+    },
+    series: [{
+        type: 
+            'pie',
+        name: 
+            'Percent share',
+        data: 
+            myStocks
+            
+    }]
+});
+}
+

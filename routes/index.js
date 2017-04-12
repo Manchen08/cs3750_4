@@ -20,16 +20,46 @@ router.get('/addStock', function(req,res,next){
   res.render('addStock', {title: 'Add Stock'});
 });
 
+/*
+    Render: Money Management Screen
+    Renders the money management page
+*/
 router.get('/management', (req, res, next) => {
-        //User.findOne({username:req.user.username}, (err,data) =>
-        //{
   res.render('management', {title: 'Money Management', user: req.user.username})
 });
 
+/*
+    Gets users stocks
+*/
 router.get('/userstocks', (req, res, next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
-    res({stocks:data.stocks});
+    res.status(200).send({stocks:data.stocks});
+  })
+});
+
+/*
+  Temporary cheater to give user stocks
+*/
+router.get('/cheatstocks', (req, res, next) => {
+  User.findOne({username:req.user.username}, (err,data) =>
+  {
+    data.stocks.push({
+        fullname: 'Apple',
+        stock: 'appl',
+        percent: 3  
+    });
+    data.stocks.push({
+        fullname: 'Alphabet',
+        stock: 'goog',
+        percent: 15  
+    });
+    data.stocks.push({
+        fullname: 'Microsoft Corp',
+        stock: 'MSFT',
+        percent: 19  
+    });
+    data.save();
   })
 });
 
