@@ -18,6 +18,7 @@ $.get('./userstocks', (data) =>{
         range.max = "100";
         range.value = data.stocks[i].percent;
         range.id = data.stocks[i].stock;
+        range.data = data.stocks[i].fullname;
         range.onchange = changedpercent;
         range.onfocus = sliderfocus;
         myElem.appendChild(range);
@@ -25,7 +26,9 @@ $.get('./userstocks', (data) =>{
         moneyRemaining = moneyRemaining - data.stocks[i].percent;
         myElemTotal.value = moneyRemaining;
         //create range input for stock
+        console.log(range.data);
     }
+    rebuildMyStocks();
 
 }).fail(() => {
     console.log("error in retreiving stocks");
@@ -34,7 +37,6 @@ $.get('./userstocks', (data) =>{
 function changedpercent(sender){
 
     var def = document.querySelector('#defaultMoney');
-    console.log(sender.srcElement.value + " : " + def.value +" : "+ sender.srcElement.oldValue);
     if(def.value == 0)
     {
         
@@ -66,6 +68,28 @@ function changedpercent(sender){
         }
     }
     sender.srcElement.oldValue = sender.srcElement.value;
+
+    rebuildMyStocks();
+}
+
+function rebuildMyStocks()
+{
+    var myElem = document.querySelector('#stocks');
+    myStocks = [];
+    for(var i = 0; i < myElem.children.length;i++)
+    {
+        myStocks.push({
+            fullname : myElem.children[i].data,
+            name : myElem.children[i].id,
+            y : Number(myElem.children[i].value)
+        });
+    }
+    myStocks.push({
+        name: "Unallocated",
+        y: Number(document.querySelector('#defaultMoney').value),
+        color: "black"
+    });
+    reloadChart();
 }
 
 function sliderfocus(sender){
@@ -86,7 +110,7 @@ function reloadChart(){
         text: 'Total Capital Distribution'
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage}%</b>'
+        pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
     },
     plotOptions: {
         pie: {
