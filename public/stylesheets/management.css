@@ -1,8 +1,33 @@
+#mmpanels{
+    display:flex;
+}
+
 #mmleftpanel{
-    width:30vw;
+    width:40vw;
 
 }
 
 #mmrightpanel{
     width:60vw;
+}
+
+#stocks{
+    height:50vh;
+    max-height:50vh;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.moneySliders{
+    width:60%;
+}
+.rangeText{
+    width:30px;
+    margin-left:5px;
+}
+.stockItem{
+    display:flex;
+}
+.stockTitle{
+    width:200px;
 }
