@@ -20,8 +20,15 @@ router.get('/addStock', ensureAuthenticated, function(req,res,next){
   res.render('addStock', {title: 'Add Stock'});
 });
 
-router.get('/viewStock', ensureAuthenticated, function(req,res,next){
-  res.render('viewStock', {title: 'View Stocks'});
+/*
+    View users stocks
+*/
+router.get('/viewStock', (req, res, next) => {
+  User.findOne({username:req.user.username}, (err,data) =>
+  {
+    res.render('viewStock', {title: 'Your Stocks', stocks: data.stocks})
+    //res.status(200).send({stocks:data.stocks});
+  })
 });
 
 router.get('/listStock', function(req,res,next){
@@ -46,16 +53,7 @@ router.get('/userstocks', ensureAuthenticated, (req, res, next) => {
   })
 });
 
-/*
-    View users stocks
-*/
-router.get('/viewStock', (req, res, next) => {
-  User.findOne({username:req.user.username}, (err,data) =>
-  {
-    res.render('viewStock', {title: 'Your Stocks', stocks: data.stocks})
-    //res.status(200).send({stocks:data.stocks});
-  })
-});
+
 
 /*
   Temporary cheater to give user stocks
