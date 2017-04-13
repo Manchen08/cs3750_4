@@ -21,7 +21,7 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
 
   passport.authenticate('local', {
-    successRedirect: '/chatroom', // Remember to change redirect.
+    successRedirect: '/management', // Remember to change redirect.
     failureRedirect: '/users/login',
     failureFlash: true
   })(req, res, next);
