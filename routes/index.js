@@ -9,7 +9,7 @@ const ensureAuthenticated = require('../lib/auth').ensureAuthenticated;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Chat' });
+  res.render('index', { title: 'Stock Page' });
 });
 
 router.get('/chatroom', ensureAuthenticated, (req, res, next) => {
@@ -18,6 +18,14 @@ router.get('/chatroom', ensureAuthenticated, (req, res, next) => {
 
 router.get('/addStock', function(req,res,next){
   res.render('addStock', {title: 'Add Stock'});
+});
+
+router.get('/viewStock', function(req,res,next){
+  res.render('viewStock', {title: 'View Stocks'});
+});
+
+router.get('/listStock', function(req,res,next){
+  res.render('listStocks', {title: 'List Stocks'});
 });
 
 /*
