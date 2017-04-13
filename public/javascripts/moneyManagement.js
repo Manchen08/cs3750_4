@@ -11,15 +11,15 @@ $.get('./userstocks', (data) =>{
     var myElemTotal = document.querySelector('#defaultMoney');
     for(var i = 0; i < data.stocks.length;i++)
     {   //container for item
-        var div = document.createElement("div");
+        /*var div = document.createElement("div");
             //title
             var stockTitle = document.createElement('div');
             stockTitle.innetText = data.stocks[i].fullname;
-            div.appendChild(stockTitle);
+            div.appendChild(stockTitle);*/
             //range
             var range = document.createElement("input");
             range.type = "range";
-            range.className = "sliders";
+            range.className = "moneySliders";
             range.min = "0";
             range.max = "100";
             range.value = data.stocks[i].percent;
@@ -27,7 +27,15 @@ $.get('./userstocks', (data) =>{
             range.data = data.stocks[i].fullname;
             range.onchange = changedpercent;
             range.onfocus = sliderfocus;
-            div.appendChild(range);
+            /*div.appendChild(range);
+            //textfield
+            var rangeText = document.createElement('input');
+            rangeText.type = "text";
+            rangeText.className = "rangeText";
+            rangeText.value = data.stocks[i].percent;
+            div.appendChild(rangeText);
+        myElem.appendChild(div); */
+        myElem.appendChild(range);       
         //set range element and remove from total money
         moneyRemaining = moneyRemaining - data.stocks[i].percent;
         myElemTotal.value = moneyRemaining;
