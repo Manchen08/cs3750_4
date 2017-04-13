@@ -39,6 +39,17 @@ router.get('/userstocks', (req, res, next) => {
 });
 
 /*
+    View users stocks
+*/
+router.get('/viewStock', (req, res, next) => {
+  User.findOne({username:req.user.username}, (err,data) =>
+  {
+    res.render('viewStock', {title: 'Your Stocks', stocks: data.stocks})
+    //res.status(200).send({stocks:data.stocks});
+  })
+});
+
+/*
   Temporary cheater to give user stocks
 */
 router.get('/cheatstocks', (req, res, next) => {
