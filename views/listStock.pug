@@ -1,3 +1,4 @@
+
 extends layout
 
 block content
@@ -7,27 +8,16 @@ block content
         script(src="../public/javascripts/markitQuoteService.js")
         script(src="../public/javascripts/addStock.js")
         script(src="http://code.jquery.com/ui/1.12.0/jquery-ui.js")
-
+        script.
+            $(function(){
+                var sym = 'MSFT';//$.url().param('symbol') || 'AAPL';
+                var dur = 3650; //$.url().param('duration') || 3650;
+                new Markit.InteractiveChartApi(sym, dur);
+            });
     body
         h1
         include ./includes/messages.pug
             div.container
-
-            ul
-                each stock in stocks
-                    script.
-                        var stockDiv = document.createElement('div');
-                        var stock = {stock: '#{stock.stock}'};
-                        stockDiv.className = 'chart';
-                        document.getElementsByClassName('container')[0].appendChild(stockDiv);
-                        var sym = stock.stock.toString();
-                        var dur = 3650;
-                        new Markit.InteractiveChartApi(sym, dur, stockDiv);
-
-                    
-
-                //div#chartDemoContainer
-=======
                 p Stock Symbol
                 input#stock(type="text" placeholder="type to search stocks")
                 span.help-inline
@@ -39,4 +29,3 @@ block content
                 div#chartDemoContainer
 
                 
->>>>>>> 45a95d4904113985881f78dbe0aef21ade096778

@@ -9,29 +9,37 @@ const ensureAuthenticated = require('../lib/auth').ensureAuthenticated;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Chat' });
+  res.render('index', { title: 'Stock Page' });
 });
 
 router.get('/chatroom', ensureAuthenticated, (req, res, next) => {
   res.render('chatroom', { title: 'Chat Room' });
 });
 
-router.get('/addStock', function(req,res,next){
+router.get('/addStock', ensureAuthenticated, function(req,res,next){
   res.render('addStock', {title: 'Add Stock'});
+});
+
+router.get('/viewStock', ensureAuthenticated, function(req,res,next){
+  res.render('viewStock', {title: 'View Stocks'});
+});
+
+router.get('/listStock', function(req,res,next){
+  res.render('listStocks', {title: 'List Stocks'});
 });
 
 /*
     Render: Money Management Screen
     Renders the money management page
 */
-router.get('/management', (req, res, next) => {
+router.get('/management', ensureAuthenticated, (req, res, next) => {
   res.render('management', {title: 'Money Management', user: req.user.username})
 });
 
 /*
     Gets users stocks
 */
-router.get('/userstocks', (req, res, next) => {
+router.get('/userstocks', ensureAuthenticated, (req, res, next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
     res.status(200).send({stocks:data.stocks});

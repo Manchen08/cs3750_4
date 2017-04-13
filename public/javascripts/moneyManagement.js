@@ -10,18 +10,32 @@ $.get('./userstocks', (data) =>{
     var myElem = document.querySelector('#stocks');
     var myElemTotal = document.querySelector('#defaultMoney');
     for(var i = 0; i < data.stocks.length;i++)
-    {
-        var range = document.createElement("input");
-        range.type = "range";
-        range.className = "sliders";
-        range.min = "0";
-        range.max = "100";
-        range.value = data.stocks[i].percent;
-        range.id = data.stocks[i].stock;
-        range.data = data.stocks[i].fullname;
-        range.onchange = changedpercent;
-        range.onfocus = sliderfocus;
-        myElem.appendChild(range);
+    {   //container for item
+        /*var div = document.createElement("div");
+            //title
+            var stockTitle = document.createElement('div');
+            stockTitle.innetText = data.stocks[i].fullname;
+            div.appendChild(stockTitle);*/
+            //range
+            var range = document.createElement("input");
+            range.type = "range";
+            range.className = "moneySliders";
+            range.min = "0";
+            range.max = "100";
+            range.value = data.stocks[i].percent;
+            range.id = data.stocks[i].stock;
+            range.data = data.stocks[i].fullname;
+            range.onchange = changedpercent;
+            range.onfocus = sliderfocus;
+            /*div.appendChild(range);
+            //textfield
+            var rangeText = document.createElement('input');
+            rangeText.type = "text";
+            rangeText.className = "rangeText";
+            rangeText.value = data.stocks[i].percent;
+            div.appendChild(rangeText);
+        myElem.appendChild(div); */
+        myElem.appendChild(range);       
         //set range element and remove from total money
         moneyRemaining = moneyRemaining - data.stocks[i].percent;
         myElemTotal.value = moneyRemaining;
@@ -49,20 +63,20 @@ function changedpercent(sender){
             moneyRemaining = def.value;
         }
     } else {
-        if(sender.srcElement.value - sender.srcElement.oldValue > 0)
+        if(sender.srcElement.value - sender.srcElement.oldValue > 0) //if adding value
         {
-            if(def.value - (sender.srcElement.value - sender.srcElement.oldValue) < 0)
-            {
+            if(Number(def.value) - (Number(sender.srcElement.value) - Number(sender.srcElement.oldValue)) < 0)
+            {   //if the increase in the bar is more than the def value
 
                 sender.srcElement.value = Number(def.value) + Number(sender.srcElement.oldValue);
                 def.value = 0;
                 moneyRemaining = 0;
-            } else {
+            } else {    //if the increase is less than what is left on dev
 
-                def.value -= sender.srcElement.value- sender.srcElement.oldValue;
+                def.value = Number(def.value) - (Number(sender.srcElement.value) - Number(sender.srcElement.oldValue));
                 moneyRemaining = def.value;
             }
-        } else {
+        } else { //if reducing value
             def.value = Number(def.value) + (Number(sender.srcElement.oldValue) - Number(sender.srcElement.value));
             moneyRemaining = def.value;
         }
