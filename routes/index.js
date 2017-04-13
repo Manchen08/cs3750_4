@@ -12,8 +12,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Stock Page' });
 });
 
-router.get('/chatroom', ensureAuthenticated, (req, res, next) => {
-  res.render('chatroom', { title: 'Chat Room' });
+router.get('/viewStocks', ensureAuthenticated, (req, res, next) => {
+  res.render('viewStocks', { title: 'View Stocks' });
 });
 
 router.get('/addStock', ensureAuthenticated, function(req,res,next){
