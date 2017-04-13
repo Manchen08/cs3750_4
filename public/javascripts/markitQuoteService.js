@@ -70,13 +70,13 @@ new Markit.QuoteService("AAPL", function(jsonResult) {
  * First argument is symbol (string) for the quote. Examples: AAPL, MSFT, JNJ, GOOG.
  * Second argument is duration (int) for how many days of history to retrieve.
  */
-Markit.InteractiveChartApi = function(symbol,duration){
+Markit.InteractiveChartApi = function(symbol,duration,chartDiv){
     this.symbol = symbol.toUpperCase();
     this.duration = duration;
-    this.PlotChart();
+    this.PlotChart($(chartDiv));
 };
 
-Markit.InteractiveChartApi.prototype.PlotChart = function(){
+Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
     
     var params = {
         parameters: JSON.stringify( this.getInputParams() )
@@ -85,7 +85,7 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(){
     //Make JSON request for timeseries data
     $.ajax({
         beforeSend:function(){
-            $("#chartDemoContainer").text("Loading chart...");
+            $(chartDiv).text("Loading chart...");
         },
         data: params,
         url: "http://dev.markitondemand.com/Api/v2/InteractiveChart/jsonp",
@@ -97,7 +97,7 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(){
                 console.error("Error: ", json.Message);
                 return;
             }
-            this.render(json);
+            this.render(json,$(chartDiv));
         },
         error: function(response,txtStatus){
             console.log(response,txtStatus)
@@ -109,7 +109,7 @@ Markit.InteractiveChartApi.prototype.getInputParams = function(){
     return {  
         Normalized: false,
         NumberOfDays: this.duration,
-        DataPeriod: "Day",
+        DataPeriod: "day",
         Elements: [
             {
                 Symbol: this.symbol,
@@ -172,7 +172,7 @@ Markit.InteractiveChartApi.prototype._getVolume = function(json) {
     return chartSeries;
 };
 
-Markit.InteractiveChartApi.prototype.render = function(data) {
+Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
     //console.log(data)
     // split the data set into ohlc and volume
     var ohlc = this._getOHLC(data),
@@ -188,7 +188,7 @@ Markit.InteractiveChartApi.prototype.render = function(data) {
     ]];
 
     // create the chart
-    $('#chartDemoContainer').highcharts('StockChart', {
+    $(chartDiv).highcharts('StockChart', {
         
         rangeSelector: {
             selected: 1
@@ -228,7 +228,7 @@ Markit.InteractiveChartApi.prototype.render = function(data) {
                     [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
                 ]
             },
-            type: 'candlestick',
+            type: 'line',
             name: this.symbol,
             data: ohlc,
             dataGrouping: {
