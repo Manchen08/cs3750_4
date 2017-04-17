@@ -63,7 +63,7 @@ router.get('/cheatstocks', (req, res, next) => {
   {
     data.stocks.push({
         fullname: 'Apple',
-        stock: 'appl',
+        stock: 'aapl',
         percent: 3  
     });
     data.stocks.push({
