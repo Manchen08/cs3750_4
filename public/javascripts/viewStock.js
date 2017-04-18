@@ -1,7 +1,5 @@
 var mongoose = require('mongoose');
+var user = require('./models/user');
 
-var userInfo;
+user.findone()
 
-function retreiveUserInfo(req, res){
-    userInfo = user.find(req.user.username)
-}
