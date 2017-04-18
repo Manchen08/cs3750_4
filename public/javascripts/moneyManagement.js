@@ -28,7 +28,6 @@ $.get('./userstocks', (data) =>{
             range.id = data.stocks[i].stock;
             range.data = data.stocks[i].fullname;
             range.oninput = changedpercent;
-            range.onfocus = sliderfocus;
             div.appendChild(range);
             //textfield
             var rangeText = document.createElement('input');
@@ -54,17 +53,11 @@ $.get('./userstocks', (data) =>{
 });
 
 function changedpercent(src){
-
+    //console.log(src.target.value);
     var t = Number(document.querySelector('#defaultMoney').value);
-    var n = Number(src.srcElement.value);
-    var o = Number(document.querySelector('#rangeText'+src.srcElement.id).value);
-    //firing whiles to fix fringe browser specific errors 
-    while(t == NaN)
-        t = Number(document.querySelector('#defaultMoney').value);
-    while(n == NaN)
-        n = Number(src.srcElement.value);
-    while(o == NaN)
-        o = Number(src.srcElement.oldValue);
+    var n = Number(src.target.value);
+    var o = Number(document.querySelector('#rangeText'+src.target.id).value);
+    
     //console.log("Attempted: "+t + " " + n + " " + o)
     if(n > o)
     {
@@ -73,31 +66,31 @@ function changedpercent(src){
             if((t-(n-o))<= 0)
             {   
                 //console.log("1. Total = " + t + " oldSlider = "+ o + " newslider= " + (t+o) + " new Total = " + 0)
-                src.srcElement.value=t+o
+                src.target.value=t+o
                 document.querySelector('#defaultMoney').value=0;
                 document.querySelector('#totalText').value = document.querySelector('#defaultMoney').value;
-                document.querySelector('#rangeText'+src.srcElement.id).value = src.srcElement.value
+                document.querySelector('#rangeText'+src.target.id).value = src.target.value
 
 
             } else {
                 //console.log("2. Total = " + t + " oldSlider = "+ o + " newslider= " + n + " new Total = " + (n-o))
                 document.querySelector('#defaultMoney').value=t-(n-o)
                 document.querySelector('#totalText').value = document.querySelector('#defaultMoney').value;
-                document.querySelector('#rangeText'+src.srcElement.id).value = src.srcElement.value
+                document.querySelector('#rangeText'+src.target.id).value = src.target.value
   
             }
         } else
         {
             //console.log("3. Total = " + t + " oldSlider = "+ o + " newslider= " + n + " new Total = " + t)
-            src.srcElement.value = o;
-            document.querySelector('#rangeText'+src.srcElement.id).value = src.srcElement.value
+            src.target.value = o;
+            document.querySelector('#rangeText'+src.target.id).value = src.target.value
 
         }
     } else {
             //console.log("4. Total = " + t + " oldSlider = "+ o + " newslider= " + n + " new Total = " + t)
             document.querySelector('#defaultMoney').value=t+(o-n)
             document.querySelector('#totalText').value = document.querySelector('#defaultMoney').value;
-            document.querySelector('#rangeText'+src.srcElement.id).value = src.srcElement.value
+            document.querySelector('#rangeText'+src.target.id).value = src.target.value
 
         
     }
@@ -129,9 +122,7 @@ function rebuildMyStocks()
     reloadChart();
 }
 
-function sliderfocus(sender){
-    sender.srcElement.oldValue = sender.srcElement.value;
-}
+
 
 function reloadChart(){
     var myHighchart = Highcharts.chart('chart', {
