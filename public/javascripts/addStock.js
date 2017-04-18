@@ -32,6 +32,7 @@ jQuery(document).ready(function($) {
 				select: function( event, ui ) {
 					//console.log(ui.item);
 					$("span.label-info").html("You selected " + ui.item.label).fadeIn("fast");
+					$("#txtName").val(ui.item.label);
 				},
 				open: function() {
 					//$(this).removeClass("ui-corner-all").addClass("ui-corner-top");

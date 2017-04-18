@@ -3,19 +3,21 @@
 
 let myStocks = [];
 let moneyRemaining = 100;
+let myHighchart;
 
 //get users stocks
 $.get('./userstocks', (data) =>{
-    console.log(data);
     var myElem = document.querySelector('#stocks');
     var myElemTotal = document.querySelector('#defaultMoney');
     for(var i = 0; i < data.stocks.length;i++)
     {   //container for item
-        /*var div = document.createElement("div");
+        var div = document.createElement("div");
+        div.className = "stockItem";
             //title
             var stockTitle = document.createElement('div');
-            stockTitle.innetText = data.stocks[i].fullname;
-            div.appendChild(stockTitle);*/
+            stockTitle.className= "stockTitle";
+            stockTitle.innerText = data.stocks[i].fullname;
+            div.appendChild(stockTitle);
             //range
             var range = document.createElement("input");
             range.type = "range";
@@ -25,20 +27,22 @@ $.get('./userstocks', (data) =>{
             range.value = data.stocks[i].percent;
             range.id = data.stocks[i].stock;
             range.data = data.stocks[i].fullname;
-            range.onchange = changedpercent;
-            range.onfocus = sliderfocus;
-            /*div.appendChild(range);
+            range.oninput = changedpercent;
+            div.appendChild(range);
             //textfield
             var rangeText = document.createElement('input');
+            rangeText.id = "rangeText" +data.stocks[i].stock;
             rangeText.type = "text";
             rangeText.className = "rangeText";
             rangeText.value = data.stocks[i].percent;
+            rangeText.readOnly = true;
             div.appendChild(rangeText);
-        myElem.appendChild(div); */
-        myElem.appendChild(range);       
+        myElem.appendChild(div); 
+        //myElem.appendChild(range);       
         //set range element and remove from total money
         moneyRemaining = moneyRemaining - data.stocks[i].percent;
         myElemTotal.value = moneyRemaining;
+        document.querySelector('#totalText').value = moneyRemaining;
         //create range input for stock
         console.log(range.data);
     }
@@ -48,70 +52,80 @@ $.get('./userstocks', (data) =>{
     console.log("error in retreiving stocks");
 });
 
-function changedpercent(sender){
-
-    var def = document.querySelector('#defaultMoney');
-    if(def.value == 0)
+function changedpercent(src){
+    //console.log(src.target.value);
+    var t = Number(document.querySelector('#defaultMoney').value);
+    var n = Number(src.target.value);
+    var o = Number(document.querySelector('#rangeText'+src.target.id).value);
+    
+    //console.log("Attempted: "+t + " " + n + " " + o)
+    if(n > o)
     {
-        
-        //if the value is greater than the old value, reset it to the old value
-        if(Number(sender.srcElement.value) > Number(sender.srcElement.oldValue)){
-            sender.srcElement.value = sender.srcElement.oldValue;
-        } else {
-            //if value is less than the old value, then add it to the money Remaining, and move the slider
-            def.value = sender.srcElement.oldValue - sender.srcElement.value;
-            moneyRemaining = def.value;
+        if(t != 0)
+        {
+            if((t-(n-o))<= 0)
+            {   
+                //console.log("1. Total = " + t + " oldSlider = "+ o + " newslider= " + (t+o) + " new Total = " + 0)
+                src.target.value=t+o
+                document.querySelector('#defaultMoney').value=0;
+                document.querySelector('#totalText').value = document.querySelector('#defaultMoney').value;
+                document.querySelector('#rangeText'+src.target.id).value = src.target.value
+
+
+            } else {
+                //console.log("2. Total = " + t + " oldSlider = "+ o + " newslider= " + n + " new Total = " + (n-o))
+                document.querySelector('#defaultMoney').value=t-(n-o)
+                document.querySelector('#totalText').value = document.querySelector('#defaultMoney').value;
+                document.querySelector('#rangeText'+src.target.id).value = src.target.value
+  
+            }
+        } else
+        {
+            //console.log("3. Total = " + t + " oldSlider = "+ o + " newslider= " + n + " new Total = " + t)
+            src.target.value = o;
+            document.querySelector('#rangeText'+src.target.id).value = src.target.value
+
         }
     } else {
-        if(sender.srcElement.value - sender.srcElement.oldValue > 0) //if adding value
-        {
-            if(Number(def.value) - (Number(sender.srcElement.value) - Number(sender.srcElement.oldValue)) < 0)
-            {   //if the increase in the bar is more than the def value
+            //console.log("4. Total = " + t + " oldSlider = "+ o + " newslider= " + n + " new Total = " + t)
+            document.querySelector('#defaultMoney').value=t+(o-n)
+            document.querySelector('#totalText').value = document.querySelector('#defaultMoney').value;
+            document.querySelector('#rangeText'+src.target.id).value = src.target.value
 
-                sender.srcElement.value = Number(def.value) + Number(sender.srcElement.oldValue);
-                def.value = 0;
-                moneyRemaining = 0;
-            } else {    //if the increase is less than what is left on dev
-
-                def.value = Number(def.value) - (Number(sender.srcElement.value) - Number(sender.srcElement.oldValue));
-                moneyRemaining = def.value;
-            }
-        } else { //if reducing value
-            def.value = Number(def.value) + (Number(sender.srcElement.oldValue) - Number(sender.srcElement.value));
-            moneyRemaining = def.value;
-        }
+        
     }
-    sender.srcElement.oldValue = sender.srcElement.value;
+    //console.log("End Values: " +document.querySelector('#defaultMoney').value +" "+src.srcElement.value + " " +src.srcElement.oldValue)
+    
 
-    rebuildMyStocks();
+    rebuildMyStocks()
 }
+
 
 function rebuildMyStocks()
 {
-    var myElem = document.querySelector('#stocks');
     myStocks = [];
-    for(var i = 0; i < myElem.children.length;i++)
+    var myElems = document.querySelectorAll('.moneySliders');
+    for(var i = 0; i<myElems.length; i++)
     {
         myStocks.push({
-            fullname : myElem.children[i].data,
-            name : myElem.children[i].id,
-            y : Number(myElem.children[i].value)
+            fullname: myElems[i].data,
+            name: myElems[i].id,
+            y:Number(myElems[i].value)
         });
     }
     myStocks.push({
-        name: "Unallocated",
-        y: Number(document.querySelector('#defaultMoney').value),
-        color: "black"
+        fullname: "Unassigned",
+        name:"Unassigned",
+        y:Number(document.querySelector('#totalText').value),
+        color:"black"
     });
     reloadChart();
 }
 
-function sliderfocus(sender){
-    sender.srcElement.oldValue = sender.srcElement.value;
-}
+
 
 function reloadChart(){
-    Highcharts.chart('chart', {
+    var myHighchart = Highcharts.chart('chart', {
     chart: {
         type: 'pie',
         options3d: {
@@ -133,7 +147,13 @@ function reloadChart(){
             depth: 35,
             dataLabels: {
                 enabled: true,
-                format: '{point.name}'
+                formatter: function() {
+                    if (this.y != 0) {
+                        return this.key;
+                    } else {
+                        return null;
+                    }
+                }
             }
         }
     },
