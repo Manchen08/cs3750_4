@@ -20,6 +20,31 @@ router.get('/addStock', ensureAuthenticated, function(req,res,next){
   res.render('addStock', {title: 'Add Stock'});
 });
 
+router.post('/saveStock', ensureAuthenticated, (req, res, next) => {
+    const sym = req.body.stock;
+    const name = req.body.txtName;
+
+    req.checkBody('stock', 'A chosen stock is required').notEmpty();
+
+    let errors = req.validationErrors();
+
+    if (errors) {
+          req.flash('success_msg','Error');
+    } else {
+        User.findOne({username:req.user.username}, (err,data) =>
+        {
+          data.stocks.push({
+              fullname: name,
+              stock: sym,
+              percent: 0
+          });
+          data.save();
+          req.flash('success_msg','Stock saved!');
+          res.redirect('/addStock');
+        })
+    }
+});
+
 /*
     View users stocks
 */
