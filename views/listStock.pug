@@ -1,4 +1,3 @@
-
 extends layout
 
 block content
@@ -6,26 +5,26 @@ block content
         link(href='stylesheets/snippet.css', rel='stylesheet')
         script(src="https://code.highcharts.com/stock/highstock.js")
         script(src="../public/javascripts/markitQuoteService.js")
-        script(src="../public/javascripts/listStock.js")
+        script(src="../public/javascripts/addStock.js")
         script(src="http://code.jquery.com/ui/1.12.0/jquery-ui.js")
-        script.
-            $(function(){
-                var sym = 'MSFT';//$.url().param('symbol') || 'AAPL';
-                var dur = 3650; //$.url().param('duration') || 3650;
-                new Markit.InteractiveChartApi(sym, dur);
-            });
+        
     body
-        //- h1
         include ./includes/messages.pug
-            div.container
-                p Stock Symbol
-                //- input#stock(type="text" placeholder="type to search stocks")
-                //- span.help-inline
-                //-     img(src="http://blog.teamtreehouse.com/wp-content/uploads/2015/05/InternetSlowdown_Day.gif")
-                //- span.label-info
-                //div.row
-                    input(type='button' )
-                    
-                div#chartDemoContainer
+        div.container
+            table
+                tbody
+                    each stock in stocks
+                        tr 
+                            td #{stock.fullname}
+                            td #{stock.stock}
+                            td #{stock.percent}
+                //- script.
+                //-     var stockDiv = document.createElement('div');
+                //-     var stock = {stock: '#{stock.stock}'};
+                //-     stockDiv.className = 'chart';
+                //-     document.getElementsByClassName('container')[0].appendChild(stockDiv);
+                //-     var sym = stock.stock.toString();
+                //-     var dur = 3650;
+                //-     new Markit.InteractiveChartApi(sym, dur, stockDiv);
 
                 

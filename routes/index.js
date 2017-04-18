@@ -56,8 +56,12 @@ router.get('/viewStock', (req, res, next) => {
   })
 });
 
-router.get('/listStock', function(req,res,next){
-  res.render('listStock', {title: 'List Stocks'});
+router.get('/listStock', (req,res,next) => {
+  User.findOne({username:req.user.username}, (err,data) =>
+  {
+    console.log(data);
+    res.render('listStock', {title: 'List Stocks', stocks:data.stocks});
+  })
 });
 
 /*
