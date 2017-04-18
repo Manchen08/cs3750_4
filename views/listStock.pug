@@ -6,7 +6,7 @@ block content
         link(href='stylesheets/snippet.css', rel='stylesheet')
         script(src="https://code.highcharts.com/stock/highstock.js")
         script(src="../public/javascripts/markitQuoteService.js")
-        script(src="../public/javascripts/addStock.js")
+        script(src="../public/javascripts/listStock.js")
         script(src="http://code.jquery.com/ui/1.12.0/jquery-ui.js")
         script.
             $(function(){
@@ -15,14 +15,14 @@ block content
                 new Markit.InteractiveChartApi(sym, dur);
             });
     body
-        h1
+        //- h1
         include ./includes/messages.pug
             div.container
                 p Stock Symbol
-                input#stock(type="text" placeholder="type to search stocks")
-                span.help-inline
-                    img(src="http://blog.teamtreehouse.com/wp-content/uploads/2015/05/InternetSlowdown_Day.gif")
-                span.label-info
+                //- input#stock(type="text" placeholder="type to search stocks")
+                //- span.help-inline
+                //-     img(src="http://blog.teamtreehouse.com/wp-content/uploads/2015/05/InternetSlowdown_Day.gif")
+                //- span.label-info
                 //div.row
                     input(type='button' )
                     

@@ -32,7 +32,7 @@ router.get('/viewStock', (req, res, next) => {
 });
 
 router.get('/listStock', function(req,res,next){
-  res.render('listStocks', {title: 'List Stocks'});
+  res.render('listStock', {title: 'List Stocks'});
 });
 
 /*
