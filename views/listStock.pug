@@ -13,14 +13,21 @@ block content
         include ./includes/messages.pug
         div.container
             table.table.table-striped
+                thead
+                    tr
+                        th.col-md-3 Stock Name
+                        th.col-md-3 Stock Symbol
+                        th.col-md-3 Percent Allocated
+                        th.col-md-5 Up/Down
+                        th.col-md-5 
                 tbody
                     each stock in stocks
                         tr
-                            td.col-md-4 #{stock.fullname}
-                            td.col-md-4 #{stock.stock}
-                            td.col-md-4 #{stock.percent}
-                            //- td.col-md-2, i.fa.fa-arrow-circle-down
-                            //- td.col-md-2, i.fa.times-circle
+                            td.col-md-3 #{stock.fullname}
+                            td.col-md-3 #{stock.stock}
+                            td.col-md-3 #{stock.percent}
+                            td.col-md-5 i.fa.fa-arrow-circle-down
+                            td.col-md-5 i.fa.times-circle
                 //- script.
                 //-     var stockDiv = document.createElement('div');
                 //-     var stock = {stock: '#{stock.stock}'};
