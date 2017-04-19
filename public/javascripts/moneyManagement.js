@@ -16,7 +16,7 @@ $.get('./userstocks', (data) =>{
             //title
             var stockTitle = document.createElement('div');
             stockTitle.className= "stockTitle";
-            stockTitle.innerText = data.stocks[i].fullname;
+            stockTitle.innerText = data.stocks[i].stock;
             div.appendChild(stockTitle);
             //range
             var range = document.createElement("input");
@@ -43,8 +43,8 @@ $.get('./userstocks', (data) =>{
         moneyRemaining = moneyRemaining - data.stocks[i].percent;
         myElemTotal.value = moneyRemaining;
         document.querySelector('#totalText').value = moneyRemaining;
-        //create range input for stock
-        console.log(range.data);
+
+
     }
     rebuildMyStocks();
 
@@ -169,3 +169,6 @@ function reloadChart(){
 });
 }
 
+$('#saveStocks').on('click', (src) => {
+    console.log("here");
+});
