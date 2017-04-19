@@ -1,16 +1,18 @@
-#mmpanels{
+#mmpanels {
     display:flex;
+    
 }
 
 #mmleftpanel{
-    width:40vw;
-
+    width:55vw;
+    
 }
 
 #mmrightpanel{
-    width:60vw;
+    width:55vw;
+    height: 50vh;
+    
 }
-
 #stocks{
     height:50vh;
     max-height:50vh;
@@ -30,4 +32,12 @@
 }
 .stockTitle{
     width:200px;
+}
+#stocks{
+    color: darkgrey;
+    height:20vh;
+    
+}
+#title{
+    width: 100%;
 }

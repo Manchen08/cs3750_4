@@ -1,15 +1,18 @@
 extends layout
 
 block content        
-
+    
         link(href='../public/stylesheets/management.css', rel='stylesheet')
+
         div#title
             h1 #{title}
+        
         div#mmpanels
+        .container
             div#mmleftpanel
                 div#username
                     h1  #{user}
-                hr
+                hr               
                 h3 Money Remaining:
                 div(style="display:flex;padding-right:12px;") 
                     div(style="width:200px;") test   
@@ -17,9 +20,11 @@ block content
                     input(type="text" value="100" style="margin-left:5px;width:30px;" readOnly)#totalText
                 div#stocks   
                 div#save
+        .container#graph
             div#mmrightpanel
                 div#chart(style="height: 400px;")
         script(src="https://code.highcharts.com/highcharts.js")
         script(src="https://code.highcharts.com/highcharts-3d.js")
         script(src="https://code.highcharts.com/modules/exporting.js")
         script(src="../public/javascripts/moneyManagement.js")
+        
