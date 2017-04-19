@@ -24,7 +24,6 @@ h6 {
 
 .topnav {
     font-size: 14px;
-    color: green;
    
 }
 
@@ -98,6 +97,7 @@ h6 {
 .content-section-a {
     padding: 50px 0;
     background-color: #f8f8f8;
+    color: black;
 }
 
 .content-section-b {
@@ -166,8 +166,12 @@ h6 {
 footer {
     padding: 50px 0;
     background-color: #f8f8f8;
+    color: black;
 }
 
 p.copyright {
-    margin: 15px 0 0;
+    margin: 10px 0 0;
+}
+#notMem{
+    color:black;
 }
