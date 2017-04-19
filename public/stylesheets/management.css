@@ -1,15 +1,15 @@
 #mmpanels {
     display:flex;
-    
+    justify-content: space-between;
 }
 
 #mmleftpanel{
-    width:55vw;
+    width:45vw;
     
 }
 
 #mmrightpanel{
-    width:55vw;
+    width:45vw;
     height: 50vh;
     
 }
@@ -26,6 +26,7 @@
 .rangeText{
     width:30px;
     margin-left:5px;
+    color:black;
 }
 .stockItem{
     display:flex;
@@ -40,4 +41,8 @@
 }
 #title{
     width: 100%;
+}
+
+#saveStocks{
+    width:100%;
 }

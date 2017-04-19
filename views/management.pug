@@ -8,19 +8,19 @@ block content
             h1 #{title}
         
         div#mmpanels
-        .container
+       
             div#mmleftpanel
                 div#username
                     h1  #{user}
                 hr               
                 h3 Money Remaining:
                 div(style="display:flex;padding-right:12px;") 
-                    div(style="width:200px;") test   
+                    div(style="width:200px;") Remaining:   
                     input(type="range" min="0" max="100" value="100" disabled="true" style="width:100%")#defaultMoney.sliders
-                    input(type="text" value="100" style="margin-left:5px;width:30px;" readOnly)#totalText
+                    input(type="text" value="100" style="color:black;margin-left:5px;width:30px;" readOnly)#totalText
                 div#stocks   
                 div#save
-        .container#graph
+                    input(type="button" id="saveStocks" value="Save").btn.btn-primary
             div#mmrightpanel
                 div#chart(style="height: 400px;")
         script(src="https://code.highcharts.com/highcharts.js")
