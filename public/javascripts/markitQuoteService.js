@@ -3,6 +3,7 @@
  */
 
 var Markit = {};
+
 /**
 * Define the QuoteService.
 * First argument is symbol (string) for the quote. Examples: AAPL, MSFT, JNJ, GOOG.
@@ -82,6 +83,11 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
         parameters: JSON.stringify( this.getInputParams() )
     }
 
+   // $.getJSON("https://chartapi.finance.yahoo.com/instrument/1.0/aapl/chartdata;type=quote;range=1d/json?callback=?",function(json){
+   //     console.log(json);
+   //     this.render(json,$(chartDiv));
+   // });
+
     //Make JSON request for timeseries data
     $.ajax({
         beforeSend:function(){
@@ -89,6 +95,7 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
         },
         data: params,
         url: "http://dev.markitondemand.com/Api/v2/InteractiveChart/jsonp",
+        //url: "https://chartapi.finance.yahoo.com/instrument/1.0/"+this.symbol+"/chartdata;type=quote;range=1d/jsonp",
         dataType: "jsonp",
         context: this,
         success: function(json){
@@ -97,6 +104,7 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
                 console.error("Error: ", json.Message);
                 return;
             }
+            console.log(json);
             this.render(json,$(chartDiv));
         },
         error: function(response,txtStatus){
@@ -108,8 +116,9 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
 Markit.InteractiveChartApi.prototype.getInputParams = function(){
     return {  
         Normalized: false,
-        NumberOfDays: this.duration,
+        NumberOfDays: 30,
         DataPeriod: "day",
+        //DataInterval: 1,
         Elements: [
             {
                 Symbol: this.symbol,
@@ -128,7 +137,7 @@ Markit.InteractiveChartApi.prototype.getInputParams = function(){
 
 Markit.InteractiveChartApi.prototype._fixDate = function(dateIn) {
     var dat = new Date(dateIn);
-    return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate());
+    return Date.UTC(dat.getFullYear(), dat.getMonth(), dat.getDate(), dat.getHours(), dat.getMinutes(), dat.getSeconds(), dat.getMilliseconds());
 };
 
 Markit.InteractiveChartApi.prototype._getOHLC = function(json) {
@@ -178,17 +187,25 @@ Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
     var ohlc = this._getOHLC(data),
         volume = this._getVolume(data);
 
+    //console.log(ohlc);
+
     // set the allowed units for data grouping
     var groupingUnits = [[
+        'hour',                         // unit name
+        [1]                             // allowed multiples
+    ],[
+        'day',                         // unit name
+        [1]                             // allowed multiples
+    ]/*,[
         'week',                         // unit name
         [1]                             // allowed multiples
     ], [
         'month',
         [1, 2, 3, 4, 6]
-    ]];
+    ]*/];
 
     // create the chart
-    $(chartDiv).highcharts('StockChart', {
+    $(chartDiv).highcharts('stockChart', {
         
         rangeSelector: {
             selected: 1
