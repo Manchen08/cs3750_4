@@ -9,7 +9,7 @@ var _now = new Date(),
     _chart;
 
 
-function renderYahoo(name, data) {
+function renderYahoo(name, data, tempChart) {
     data = data['Time Series (5min)'];
     var listData = [];
     //console.log(data['Time Series (15min)']);
@@ -46,14 +46,15 @@ function renderYahoo(name, data) {
             threshold: null
         
     };
-    _chart.addSeries(ohlcSeries);
+    tempChart.addSeries(ohlcSeries);
 }
 
 
-$(function () {
-    _chart = new Highcharts.StockChart({
+function createGraph(ticker, stockDiv) {
+    var tempChart = new Highcharts.StockChart({
         chart: {
-            renderTo: document.querySelector('#chart1 .chart')
+            renderTo: stockDiv
+            //renderTo: document.querySelector('#chart1 .chart')
         },
         title: {
             text: ticker
@@ -94,7 +95,7 @@ $(function () {
     //  var url = '//crossorigin.me/' + createUrlYahoo(ticker, from, to);
     var url = 'http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=MSFT&apikey=50JC?callback=?';
 
-    var ticker = 'MSFT';
+    //var ticker = 'MSFT';
     
     $.ajax({
         url: 'http://cors-anywhere.herokuapp.com/http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='+ticker+'&interval=5min&outputsize=full&apikey=50JC',
@@ -103,9 +104,9 @@ $(function () {
         context: this,
         success: function(json){
             console.log(json);
-            renderYahoo(ticker, json);
+            renderYahoo(ticker, json, tempChart);
         }
     });
-});
+};
 
 

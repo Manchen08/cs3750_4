@@ -94,9 +94,9 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
             $(chartDiv).text("Loading chart...");
         },
         data: params,
-        url: "http://dev.markitondemand.com/Api/v2/InteractiveChart/jsonp",
+        url: 'http://cors-anywhere.herokuapp.com/http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='+this.symbol+'&interval=5min&outputsize=full&apikey=50JC',
         //url: "https://chartapi.finance.yahoo.com/instrument/1.0/"+this.symbol+"/chartdata;type=quote;range=1d/jsonp",
-        dataType: "jsonp",
+        dataType: "json",
         context: this,
         success: function(json){
             //Catch errors
@@ -104,8 +104,19 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
                 console.error("Error: ", json.Message);
                 return;
             }
-            console.log(json);
-            this.render(json,$(chartDiv));
+            data = json['Time Series (5min)'];
+            var listData = [];
+                //console.log(data['Time Series (15min)']);
+                for(row in data){
+                //console.log(row);
+                tempArr = [new Date(row).getTime(), parseFloat(data[row]['1. open']), parseFloat(data[row]['2. high']), parseFloat(data[row]['3. low']), parseFloat(data[row]['4. close']), parseFloat(data[row]['5. volume'])];
+                //console.log(tempArr);
+                listData.push(tempArr);
+            }
+
+            listData = listData.reverse();
+            console.log(listData);
+            this.render(listData,$(chartDiv));
         },
         error: function(response,txtStatus){
             console.log(response,txtStatus)
@@ -117,8 +128,8 @@ Markit.InteractiveChartApi.prototype.getInputParams = function(){
     return {  
         Normalized: false,
         NumberOfDays: 30,
-        DataPeriod: "day",
-        //DataInterval: 1,
+        DataPeriod: "minute",
+        DataInterval: 1,
         Elements: [
             {
                 Symbol: this.symbol,
@@ -166,18 +177,14 @@ Markit.InteractiveChartApi.prototype._getVolume = function(json) {
     var dates = json.Dates || [];
     var elements = json.Elements || [];
     var chartSeries = [];
-
-    if (elements[1]){
-
-        for (var i = 0, datLen = dates.length; i < datLen; i++) {
-            var dat = this._fixDate( dates[i] );
-            var pointData = [
-                dat,
-                elements[1].DataSeries['volume'].values[i]
-            ];
-            chartSeries.push( pointData );
-        };
-    }
+    for (var i = 0, datLen = json.length; i < datLen; i++) {
+        var dat = json[i][0];
+        var pointData = [
+            dat,
+            json[i][5]
+        ];
+        chartSeries.push( pointData );
+    };
     return chartSeries;
 };
 
@@ -208,8 +215,29 @@ Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
     $(chartDiv).highcharts('stockChart', {
         
         rangeSelector: {
-            selected: 1
-            //enabled: false
+            buttons: [{
+                type: 'hour',
+                count: 1,
+                text: '1H'
+            }, {
+                type: 'day',
+                count: 1,
+                text: '1D'
+            }, {
+                type: 'day',
+                count: 7,
+                text: '1W'
+            },{
+                type: 'month',
+                count: 1,
+                text: '1M'
+            }, {
+                type: 'all',
+                count: 1,
+                text: 'All'
+            }],
+            selected: 1,
+            inputEnabled: false
         },
 
         title: {
@@ -247,11 +275,11 @@ Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
             },
             type: 'line',
             name: this.symbol,
-            data: ohlc,
+            data: data,
             dataGrouping: {
                 units: groupingUnits
             }
-        }, {
+        }, /*{
             type: 'column',
             name: 'Volume',
             data: volume,
@@ -259,7 +287,7 @@ Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
             dataGrouping: {
                 units: groupingUnits
             }
-        }],
+        }*/],
         credits: {
             enabled:false
         }
