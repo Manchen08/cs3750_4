@@ -79,6 +79,7 @@ a {
      background-color: darkturquoise;
      border-color: white;
      color: black;
+     width: 150px;
  }
  input#username, input#password, input#pwd,
  input#email.form-control, input#uName.form-control,
@@ -99,4 +100,16 @@ input#stock{
      height: 40px;
      width:250px;
      border-radius: 7px;
+     color:black;
 }
+.ui-menu-item:hover{
+    color:hotpink;
+}
+footer#footer{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+}
+
