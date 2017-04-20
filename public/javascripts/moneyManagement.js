@@ -170,5 +170,34 @@ function reloadChart(){
 }
 
 $('#saveStocks').on('click', (src) => {
-    console.log("here");
+    var myStocks = [];
+    var stcks = document.querySelectorAll('.moneySliders');
+    for(var i = 0; i < stcks.length; i++)
+    {
+        myStocks.push({
+                fullname:stcks[i].data, 
+                stock:stcks[i].id,
+                percent:stcks[i].value
+            })
+    }
+    $.ajax({
+            url: '/userstocks',
+            type: 'PUT',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({
+                stocks : myStocks
+            }),
+            success: function(data, textStatus, jqXHR) {
+               //change save button color and text
+               document.querySelector('#saveStocks').value = "Saved!";
+               document.querySelector('#saveStocks').style.backgroundColor = "red";
+               setTimeout(()=>{
+                document.querySelector('#saveStocks').value = "Save";
+                document.querySelector('#saveStocks').style.backgroundColor = "orange";
+               },"4000")
+               //start timer then turn botton color back
+            }
+        });
+        
 });

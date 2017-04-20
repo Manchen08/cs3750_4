@@ -12,10 +12,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Stock Page' });
 });
 
-router.get('/chatroom', ensureAuthenticated, (req, res, next) => {
-  res.render('chatroom', { title: 'Chat Room' });
-});
-
 router.get('/addStock', ensureAuthenticated, function(req,res,next){
   res.render('addStock', {title: 'Add Stock'});
 });
@@ -85,27 +81,15 @@ router.get('/userstocks', ensureAuthenticated, (req, res, next) => {
 
 
 /*
-  Temporary cheater to give user stocks
+  updates users stocks
 */
-router.get('/cheatstocks', (req, res, next) => {
+router.put('/userstocks', (req, res, next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
-    data.stocks.push({
-        fullname: 'Apple',
-        stock: 'aapl',
-        percent: 3  
-    });
-    data.stocks.push({
-        fullname: 'Alphabet',
-        stock: 'goog',
-        percent: 15  
-    });
-    data.stocks.push({
-        fullname: 'Microsoft Corp',
-        stock: 'MSFT',
-        percent: 19  
-    });
+    data.stocks = [];
+    data.stocks = req.body.stocks;
     data.save();
+    res.status(200).send({message:"Save Complete"});
   })
 });
 
