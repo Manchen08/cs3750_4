@@ -9,7 +9,7 @@ jQuery(document).ready(function($) {
 				source: function(request,response) {
 					$.ajax({
 						beforeSend: function(){ 
-							$("span.help-inline").show();
+							//$("span.help-inline").show();
 							$("span.label-info").empty().hide();
 						},
 						url: "http://dev.markitondemand.com/api/v2/Lookup/jsonp",
@@ -30,9 +30,8 @@ jQuery(document).ready(function($) {
 				},
 				minLength: 0,
 				select: function( event, ui ) {
-					//console.log(ui.item);
-					$("span.label-info").html("You selected " + ui.item.label).fadeIn("fast");
 					$("#txtName").val(ui.item.label);
+					$("#symName").val(ui.item.value);
 				},
 				open: function() {
 					//$(this).removeClass("ui-corner-all").addClass("ui-corner-top");

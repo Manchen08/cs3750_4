@@ -17,7 +17,7 @@ router.get('/addStock', ensureAuthenticated, function(req,res,next){
 });
 
 router.post('/saveStock', ensureAuthenticated, (req, res, next) => {
-    const sym = req.body.stock;
+    const sym = req.body.symName;
     const name = req.body.txtName;
 
     req.checkBody('stock', 'A chosen stock is required').notEmpty();
