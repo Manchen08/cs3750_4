@@ -190,8 +190,12 @@ $('#saveStocks').on('click', (src) => {
             }),
             success: function(data, textStatus, jqXHR) {
                //change save button color and text
-               var btn = document.querySelector('#saveStocks');
-               
+               document.querySelector('#saveStocks').value = "Saved!";
+               document.querySelector('#saveStocks').style.backgroundColor = "red";
+               setTimeout(()=>{
+                document.querySelector('#saveStocks').value = "Save";
+                document.querySelector('#saveStocks').style.backgroundColor = "orange";
+               },"4000")
                //start timer then turn botton color back
             }
         });

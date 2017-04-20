@@ -89,7 +89,7 @@ router.put('/userstocks', (req, res, next) => {
     data.stocks = [];
     data.stocks = req.body.stocks;
     data.save();
-    res.status(200).send("Save Complete");
+    res.status(200).send({message:"Save Complete"});
   })
 });
 
