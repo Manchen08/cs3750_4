@@ -113,7 +113,7 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
             }
 
             listData = listData.reverse();
-            console.log(listData);
+            //console.log(listData);
             this.render(listData,$(chartDiv));
         },
         error: function(response,txtStatus){
