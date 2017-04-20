@@ -17,15 +17,20 @@ router.get('/addStock', ensureAuthenticated, function(req,res,next){
 });
 
 router.post('/saveStock', ensureAuthenticated, (req, res, next) => {
-    const sym = req.body.stock;
+    const sym = req.body.symName;
     const name = req.body.txtName;
 
-    req.checkBody('stock', 'A chosen stock is required').notEmpty();
+    req.checkBody('txtName', 'A chosen stock is required').notEmpty();
 
     let errors = req.validationErrors();
-
+    if(!errors){
+      if(sym.length > 4){
+        errors = "Error";
+      }
+    }
     if (errors) {
-          req.flash('success_msg','Error');
+          req.flash('success_msg','A chosen stock is required.');
+          res.redirect('/addStock');
     } else {
         User.findOne({username:req.user.username}, (err,data) =>
         {
@@ -55,7 +60,6 @@ router.get('/viewStock', (req, res, next) => {
 router.get('/listStock', (req,res,next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
-    console.log(data);
     res.render('listStock', {title: 'List Stocks', stocks:data.stocks});
   })
 });

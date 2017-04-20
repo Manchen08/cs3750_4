@@ -12,7 +12,7 @@ var Markit = {};
 Markit.QuoteService = function(sSymbol, fCallback) {
     this.symbol = sSymbol;
     this.fCallback = fCallback;
-    this.DATA_SRC = "http://dev.markitondemand.com/Api/v2/Quote/jsonp";
+    this.DATA_SRC = "http://cors-anywhere.herokuapp.com/http://dev.markitondemand.com/Api/v2/Quote/json";
     this.makeRequest();
 };
 /**
@@ -37,7 +37,7 @@ Markit.QuoteService.prototype.makeRequest = function() {
     this.xhr = $.ajax({
         data: { symbol: this.symbol },
         url: this.DATA_SRC,
-        dataType: "jsonp",
+        dataType: "json",
         success: this.handleSuccess,
         error: this.handleError,
         context: this
@@ -95,7 +95,6 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
         },
         data: params,
         url: 'http://cors-anywhere.herokuapp.com/http://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol='+this.symbol+'&interval=5min&outputsize=full&apikey=50JC',
-        //url: "https://chartapi.finance.yahoo.com/instrument/1.0/"+this.symbol+"/chartdata;type=quote;range=1d/jsonp",
         dataType: "json",
         context: this,
         success: function(json){
@@ -108,14 +107,13 @@ Markit.InteractiveChartApi.prototype.PlotChart = function(chartDiv){
             var listData = [];
                 //console.log(data['Time Series (15min)']);
                 for(row in data){
-                //console.log(row);
                 tempArr = [new Date(row).getTime(), parseFloat(data[row]['1. open']), parseFloat(data[row]['2. high']), parseFloat(data[row]['3. low']), parseFloat(data[row]['4. close']), parseFloat(data[row]['5. volume'])];
                 //console.log(tempArr);
                 listData.push(tempArr);
             }
 
             listData = listData.reverse();
-            console.log(listData);
+            //console.log(listData);
             this.render(listData,$(chartDiv));
         },
         error: function(response,txtStatus){
@@ -218,23 +216,44 @@ Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
             buttons: [{
                 type: 'hour',
                 count: 1,
-                text: '1H'
+                text: '1H',
+                dataGrouping: {
+                    forced: false,
+                    units: [['min', [5]]]
+                }
             }, {
                 type: 'day',
                 count: 1,
-                text: '1D'
+                text: '1D',
+                dataGrouping: {
+                    forced: true,
+                    units: [['hour', [1]]]
+                }
+                  
             }, {
                 type: 'day',
                 count: 7,
-                text: '1W'
+                text: '1W',
+                dataGrouping: {
+                    forced: true,
+                    units: [['hour', [1]]]
+                }
             },{
                 type: 'month',
                 count: 1,
-                text: '1M'
+                text: '1M',
+                dataGrouping: {
+                    forced: true,
+                    units: [['day', [1]]]
+                }
             }, {
                 type: 'all',
                 count: 1,
-                text: 'All'
+                text: 'All',
+                dataGrouping: {
+                    forced: true,
+                    units: [['week', [1]]]
+                }
             }],
             selected: 1,
             inputEnabled: false
@@ -278,6 +297,9 @@ Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
             data: data,
             dataGrouping: {
                 units: groupingUnits
+            },
+            tooltip: {
+                valueDecimals: 2
             }
         }, /*{
             type: 'column',
