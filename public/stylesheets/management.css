@@ -44,5 +44,9 @@
 }
 
 #saveStocks{
-    width:100%;
+    width:150px;
+    background-color: darkturquoise;
+    border-color: white;
+    color: black;
+    
 }

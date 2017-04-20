@@ -19,6 +19,9 @@ block content
     </div>
         div.container
             each stock in stocks
+                br
+                hr#viewStock
+                br
                 script.
                     var stockDiv = document.createElement('div');
                     var stock = {stock: '#{stock.stock}'};
