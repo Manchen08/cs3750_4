@@ -114,8 +114,8 @@ function rebuildMyStocks()
         });
     }
     myStocks.push({
-        fullname: "Unassigned",
-        name:"Unassigned",
+        fullname: "Reserve",
+        name:"Reserve",
         y:Number(document.querySelector('#totalText').value),
         color:"black"
     });

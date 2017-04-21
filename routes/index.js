@@ -49,7 +49,7 @@ router.post('/saveStock', ensureAuthenticated, (req, res, next) => {
 /*
     View users stocks
 */
-router.get('/viewStock', (req, res, next) => {
+router.get('/viewStock', ensureAuthenticated,(req, res, next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
     res.render('viewStock', {title: 'Your Stocks', stocks: data.stocks})
@@ -57,7 +57,7 @@ router.get('/viewStock', (req, res, next) => {
   })
 });
 
-router.get('/listStock', (req,res,next) => {
+router.get('/listStock', ensureAuthenticated,(req,res,next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
     res.render('listStock', {title: 'List Stocks', stocks:data.stocks});
@@ -87,7 +87,7 @@ router.get('/userstocks', ensureAuthenticated, (req, res, next) => {
 /*
   updates users stocks
 */
-router.put('/userstocks', (req, res, next) => {
+router.put('/userstocks', ensureAuthenticated,(req, res, next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
     data.stocks = [];
