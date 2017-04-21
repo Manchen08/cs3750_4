@@ -32,8 +32,8 @@ $.ajax({
                 var sdelete = document.createElement('div');
                 sdelete.className = "sdelete";
                 sdelete.innerText = "X";
-                sdelete.id = "clickedit" + res.stocks[i].stock
-                $("#clickedit" + res.stocks[i].stock).on('click',deleteStock);
+                sdelete.id = res.stocks[i].stock
+                sdelete.onclick= deleteStock;
 
             scontain.appendChild(sname);
             scontain.appendChild(ssymbol);
@@ -48,7 +48,7 @@ $.ajax({
 
 function deleteStock(e)
 {
-    console.log(e);
+    console.log(e.target.id);
 }
 });
 
