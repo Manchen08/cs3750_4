@@ -58,10 +58,9 @@ router.get('/viewStock', ensureAuthenticated,(req, res, next) => {
 });
 
 router.get('/listStock', ensureAuthenticated,(req,res,next) => {
-  User.findOne({username:req.user.username}, (err,data) =>
-  {
-    res.render('listStock', {title: 'List Stocks', stocks:data.stocks});
-  })
+
+    res.render('listStock', {title: 'List Stocks', userr:req.user.username});
+
 });
 
 /*
@@ -82,18 +81,41 @@ router.get('/userstocks', ensureAuthenticated, (req, res, next) => {
   })
 });
 
-
-
 /*
   updates users stocks
 */
 router.put('/userstocks', ensureAuthenticated,(req, res, next) => {
   User.findOne({username:req.user.username}, (err,data) =>
   {
-    data.stocks = [];
-    data.stocks = req.body.stocks;
+    var r = req.body.stocks.map((e=> e.percent)).reduce(( v1,v2)=>Number(v1)+Number(v2),0)
+
+    if(r <= 100)
+    {
+      //console.log(req.body.stocks.percent.reduce((v1,v2) => v1+v2,0));
+      data.stocks = [];
+      data.stocks = req.body.stocks;
+      data.save();
+      res.status(200).send({message:"Save Complete"});
+    }
+  })
+});
+
+router.delete('/userstocks', ensureAuthenticated,(req, res, next) => {
+
+  User.findOne({username:req.user.username}, (err,data) =>
+  {
+    
+    for(var i =0; i < data.stocks.length; i++)
+    {
+      if (data.stocks[i].stock === req.body.stock) {
+          data.stocks.splice(i,1);
+          break;
+      }
+    }
+
     data.save();
-    res.status(200).send({message:"Save Complete"});
+    res.status(200).send({message:"Deleted",user:data});
+
   })
 });
 

@@ -10,24 +10,35 @@ block content
         script(src="http://code.jquery.com/ui/1.12.0/jquery-ui.js")
         
     body
-        include ./includes/messages.pug
-        div.container
-            table.table.table-sm
-                thead.thead-inverse
-                    tr
-                        th.col-md-4 Stock Name
-                        th.col-md-3 Stock Symbol
-                        th.col-md-3 Percent Allocated
-                        th.col-md-5 Up/Down
-                        th.col-md-5 
-                tbody
-                    each stock in stocks
-                        tr
-                            td.col-md-4 #{stock.fullname}
-                            td.col-md-3 #{stock.stock}
-                            td.col-md-3 #{stock.percent}
-                            td.col-md-5 i.fa.fa-arrow-circle-down
-                            td.col-md-5 i.fa.times-circle
+        div#sheader
+            div.sname Stock Name
+            div.ssymbol Stock Symbol
+            div.sallocated Percent Allocated
+            div.sprice Stock Price
+            div.sud Up/Down
+            div.stdelete Delete
+        br
+        div#stocks
+        
+        
+        //- .container
+        //-     table.table.table-sm
+        //-         thead.thead-inverse
+        //-             tr
+        //-                 th.col-md-4 Stock Name
+        //-                 th.col-md-3 Stock Symbol
+        //-                 th.col-md-3 Percent Allocated
+        //-                 th.col-md-5 Up/Down
+        //-                 th.col-md-5 
+        //-         tbody
+        //-             each stock in stocks
+        //-                 tr
+        //-                     td.col-md-4 #{stock.fullname}
+        //-                     td.col-md-3 #{stock.stock}
+        //-                     td.col-md-3 #{stock.percent}
+        //-                     td.col-md-5 i.fa.fa-arrow-circle-down
+        //-                     td.col-md-5 
+        //-                         a.deleteLink X
                 //- script.
                 //-     var stockDiv = document.createElement('div');
                 //-     var stock = {stock: '#{stock.stock}'};
@@ -39,4 +50,4 @@ block content
                 footer
                     hr
                     copyright &copy; 2017 CS3750 Project 4
-                
+        script(src="../public/javascripts/listStock.js")

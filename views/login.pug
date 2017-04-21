@@ -3,7 +3,6 @@ extends layout
 block content
     .container
         h1 Login
-        include ./includes/messages.pug
         form(method='POST' action='/users/login')
             div.form-group
                 label(for='username') Username:

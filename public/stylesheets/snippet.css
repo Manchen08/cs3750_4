@@ -167,3 +167,46 @@
     .test-style {
         word-wrap: break-word;
     }
+
+    
+
+    #sheader{
+        display:flex;
+        border-top: white;
+        border-top-style: groove;
+    }
+
+    .sname{
+        width:20vw;
+    }
+    .ssymbol{
+        width:10vw;
+    }
+    .sallocated{
+        width:10vw;
+    }
+    .sprice{
+        width:10vw;
+    }
+    .sud{
+        width:10vw;
+    }
+    .stdelete{
+        width:10vw;    
+    }
+    .sdelete{
+        width:10vw;
+        color:red;
+    
+    }
+
+    .sdelete:hover{ color: red; text-decoration: none; cursor:pointer;}
+    .sdelete:link{ color: red; text-decoration: none}
+    .sdelete:visited{ color: red; text-decoration: none}
+    .sdelete:active{ color: red; text-decoration: none}
+
+    .scontain{
+        display:flex;
+        border-top: white;
+        border-top-style: groove;
+    }
