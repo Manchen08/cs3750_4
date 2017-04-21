@@ -5,10 +5,10 @@ $.ajax({
     url:'/userstocks',
     type: 'GET',
     success: function (res){
-        console.log(res);
             for(var i = 0; i < res.stocks.length;i++){
             var scontain = document.createElement('div');
             scontain.className = "scontain";
+            scontain.id = res.stocks[i].stock;
                 var sname = document.createElement('div');
                 sname.className = "sname";
                 sname.innerText = res.stocks[i].fullname; //stockname
@@ -32,7 +32,7 @@ $.ajax({
                 var sdelete = document.createElement('div');
                 sdelete.className = "sdelete";
                 sdelete.innerText = "X";
-                sdelete.id = res.stocks[i].stock
+                sdelete.data = res.stocks[i].stock;
                 sdelete.onclick= deleteStock;
 
             scontain.appendChild(sname);
@@ -48,7 +48,19 @@ $.ajax({
 
 function deleteStock(e)
 {
-    console.log(e.target.id);
+    console.log(e.target.data);
+    $.ajax({
+            url: '/userstocks',
+            type: 'DELETE',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({ stock: e.target.data}),
+            success: function(res) {
+                console.log(res);
+                document.querySelector('#'+e.target.data).remove();
+            }
+        });
+
 }
 });
 

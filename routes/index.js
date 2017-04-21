@@ -81,8 +81,6 @@ router.get('/userstocks', ensureAuthenticated, (req, res, next) => {
   })
 });
 
-
-
 /*
   updates users stocks
 */
@@ -93,6 +91,25 @@ router.put('/userstocks', ensureAuthenticated,(req, res, next) => {
     data.stocks = req.body.stocks;
     data.save();
     res.status(200).send({message:"Save Complete"});
+  })
+});
+
+router.delete('/userstocks', ensureAuthenticated,(req, res, next) => {
+  console.log(req.body);
+  User.findOne({username:req.user.username}, (err,data) =>
+  {
+    
+    for(var i =0; i < data.stocks.length; i++)
+    {
+      if (data.stocks[i].stock === req.body.stock) {
+          data.stocks.splice(i,1);
+          break;
+      }
+    }
+
+    data.save();
+    res.status(200).send({message:"Deleted",user:data});
+
   })
 });
 
