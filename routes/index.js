@@ -95,7 +95,7 @@ router.put('/userstocks', ensureAuthenticated,(req, res, next) => {
 });
 
 router.delete('/userstocks', ensureAuthenticated,(req, res, next) => {
-  console.log(req.body);
+
   User.findOne({username:req.user.username}, (err,data) =>
   {
     
