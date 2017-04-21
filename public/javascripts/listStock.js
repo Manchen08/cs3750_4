@@ -1,9 +1,63 @@
-var mongoose = require('mongoose');
-var user = require('./models/user');
 
-user.findone({username:req.user.username}, function(err,user){
-    console.log(user);
+$(document).ready(() => {
+
+$.ajax({
+    url:'/userstocks',
+    type: 'GET',
+    success: function (res){
+        console.log(res);
+            for(var i = 0; i < res.stocks.length;i++){
+            var scontain = document.createElement('div');
+            scontain.className = "scontain";
+                var sname = document.createElement('div');
+                sname.className = "sname";
+                sname.innerText = res.stocks[i].fullname; //stockname
+                
+                var ssymbol = document.createElement('div');
+                ssymbol.className = "ssymbol";
+                ssymbol.innerText = res.stocks[i].stock;
+            
+                var sallocated = document.createElement('div');
+                sallocated.className = "sallocated";
+                sallocated.innerText = res.stocks[i].percent + "%";
+
+                var sprice = document.createElement('div');
+                sprice.className = "sprice";
+                sprice.innerText = "1"; //add current stock price
+
+                var sud = document.createElement('div');
+                sud.className = "sud";
+                sud.innerText = "up"; //add up or down depending on price
+
+                var sdelete = document.createElement('div');
+                sdelete.className = "sdelete";
+                sdelete.innerText = "X";
+                sdelete.id = "clickedit" + res.stocks[i].stock
+                $("#clickedit" + res.stocks[i].stock).on('click',deleteStock);
+
+            scontain.appendChild(sname);
+            scontain.appendChild(ssymbol);
+            scontain.appendChild(sallocated);
+            scontain.appendChild(sprice);
+            scontain.appendChild(sud);
+            scontain.appendChild(sdelete);
+            document.querySelector('#stocks').appendChild(scontain);
+        }
+    }
+})
+
+function deleteStock(e)
+{
+    console.log(e);
+}
 });
+
+
+
+
+
+
+
 
 
 /*

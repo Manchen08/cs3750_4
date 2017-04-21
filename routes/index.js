@@ -58,10 +58,9 @@ router.get('/viewStock', ensureAuthenticated,(req, res, next) => {
 });
 
 router.get('/listStock', ensureAuthenticated,(req,res,next) => {
-  User.findOne({username:req.user.username}, (err,data) =>
-  {
-    res.render('listStock', {title: 'List Stocks', stocks:data.stocks});
-  })
+
+    res.render('listStock', {title: 'List Stocks', userr:req.user.username});
+
 });
 
 /*
