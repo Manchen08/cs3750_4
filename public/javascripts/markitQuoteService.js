@@ -19,6 +19,7 @@ Markit.QuoteService = function(sSymbol, fCallback) {
 * Ajax success callback. fCallback is the 2nd argument in the QuoteService constructor.
 */
 Markit.QuoteService.prototype.handleSuccess = function(jsonResult) {
+    console.log(jsonResult);
     this.fCallback(jsonResult);
 };
 /**
@@ -315,3 +316,5 @@ Markit.InteractiveChartApi.prototype.render = function(data,chartDiv) {
         }
     });
 };
+
+// exports.Markit.QuoteService = Markit.QuoteService;
