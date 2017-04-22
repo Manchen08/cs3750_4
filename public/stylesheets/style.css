@@ -105,7 +105,7 @@ input#stock{
 .ui-menu-item:hover{
     color:hotpink;
 }
-footer#footer{
+#footer{
     position: fixed;
     right: 0;
     bottom: 0;
