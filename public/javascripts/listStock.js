@@ -23,12 +23,14 @@ $.ajax({
 
                 var sprice = document.createElement('div');
                 sprice.className = "sprice";
+                sprice.id = "sprice"+res.stocks[i].stock;
                 sprice.innerText = "1"; //add current stock price
 
                 var sud = document.createElement('div');
                 sud.className = "sud";
+                sud.id = "sud"+res.stocks[i].stock;
                 sud.innerText = "up"; //add up or down depending on price
-
+                
                 var sdelete = document.createElement('div');
                 sdelete.className = "sdelete";
                 sdelete.innerText = "X";
@@ -42,6 +44,19 @@ $.ajax({
             scontain.appendChild(sud);
             scontain.appendChild(sdelete);
             document.querySelector('#stocks').appendChild(scontain);
+
+            new Markit.QuoteService(res.stocks[i].stock,function(jsonResult){
+                console.log(jsonResult)
+                // var mainDiv = document.getElementById('#stocks');
+                document.querySelector('#sprice'+jsonResult.Symbol).innerHTML = jsonResult.LastPrice.toString();
+                if(jsonResult.Change > 0){
+                    document.querySelector('#sud'+jsonResult.Symbol).innerHTML = '&#8679';
+                    console.log('Up')
+                }else{
+                    document.querySelector('#sud'+jsonResult.Symbol).innerHTML = '&#8681';
+                    console.log('Down')
+                }
+            })
         }
     }
 })
