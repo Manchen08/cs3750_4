@@ -51,9 +51,11 @@ $.ajax({
                 document.querySelector('#sprice'+jsonResult.Symbol).innerHTML = jsonResult.LastPrice.toString();
                 if(jsonResult.Change > 0){
                     document.querySelector('#sud'+jsonResult.Symbol).innerHTML = '&#8679';
+                    document.querySelector('#sud'+jsonResult.Symbol).style.color = "green";
                     console.log('Up')
                 }else{
                     document.querySelector('#sud'+jsonResult.Symbol).innerHTML = '&#8681';
+                    document.querySelector('#sud'+jsonResult.Symbol).style.color = "red";
                     console.log('Down')
                 }
             })
