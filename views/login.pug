@@ -1,6 +1,7 @@
 extends layout
 
 block content
+    include ./includes/messages.pug 
     .container
         h1 Login
         form(method='POST' action='/users/login')

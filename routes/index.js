@@ -89,6 +89,7 @@ router.put('/userstocks', ensureAuthenticated,(req, res, next) => {
   {
     var r = req.body.stocks.map((e=> e.percent)).reduce(( v1,v2)=>Number(v1)+Number(v2),0)
 
+
     if(r <= 100)
     {
       //console.log(req.body.stocks.percent.reduce((v1,v2) => v1+v2,0));
