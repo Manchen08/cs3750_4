@@ -63,7 +63,7 @@ $.ajax({
 
 function deleteStock(e)
 {
-    console.log(e.target.data);
+    
     $.ajax({
             url: '/userstocks',
             type: 'DELETE',
