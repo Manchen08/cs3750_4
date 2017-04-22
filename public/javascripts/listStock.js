@@ -24,12 +24,12 @@ $.ajax({
                 var sprice = document.createElement('div');
                 sprice.className = "sprice";
                 sprice.id = "sprice"+res.stocks[i].stock;
-                sprice.innerText = "1"; //add current stock price
+                sprice.innerText = ""; //add current stock price
 
                 var sud = document.createElement('div');
                 sud.className = "sud";
                 sud.id = "sud"+res.stocks[i].stock;
-                sud.innerText = "up"; //add up or down depending on price
+                sud.innerText = ""; //add up or down depending on price
                 
                 var sdelete = document.createElement('div');
                 sdelete.className = "sdelete";
