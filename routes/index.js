@@ -24,7 +24,7 @@ router.post('/saveStock', ensureAuthenticated, (req, res, next) => {
 
     let errors = req.validationErrors();
     if(!errors){
-      if(sym.length > 4){
+      if(sym.length > 5){
         errors = "Error";
       }
     }
@@ -34,14 +34,20 @@ router.post('/saveStock', ensureAuthenticated, (req, res, next) => {
     } else {
         User.findOne({username:req.user.username}, (err,data) =>
         {
-          data.stocks.push({
-              fullname: name,
-              stock: sym,
-              percent: 0
-          });
-          data.save();
-          req.flash('success_msg','Stock saved!');
-          res.redirect('/addStock');
+            if (data.stocks.filter( e => e.stock == sym).length === 0) {
+              data.stocks.push({
+                  fullname: name,
+                  stock: sym,
+                  percent: 0
+              });
+              data.save();
+              req.flash('success_msg','Stock saved!');
+              res.redirect('/addStock');
+            }
+            else {
+              req.flash('success_msg','Chosen stock already exists.');
+              res.redirect('/addStock');
+            }
         })
     }
 });
