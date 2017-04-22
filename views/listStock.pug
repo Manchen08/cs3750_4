@@ -1,6 +1,9 @@
 extends layout
 
 block content
+    div#titlelistStock
+        h2 Stocks List
+        br
     head
         link(href='stylesheets/snippet.css', rel='stylesheet')
         link(href='font-awesome/css/font-awesome.css', rel='stylesheet')
@@ -47,7 +50,7 @@ block content
                 //-     var sym = stock.stock.toString();
                 //-     var dur = 3650;
                 //-     new Markit.InteractiveChartApi(sym, dur, stockDiv);
-                footer
-                    hr
-                    copyright &copy; 2017 CS3750 Project 4
+        footer
+            hr
+            copyright &copy; 2017 CS3750 Project 4
         script(src="../public/javascripts/listStock.js")
