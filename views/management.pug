@@ -1,0 +1,38 @@
+extends layout
+
+block content        
+        include ./includes/messages.pug 
+        link(href='../public/stylesheets/management.css', rel='stylesheet')
+
+        div#title
+            h1#titleManagement #{title}
+        
+        div#mmpanels
+       
+            div#mmleftpanel
+                div#username
+                    h1  #{user}
+                hr#hr3              
+                h3 Money Remaining:
+                div(style="display:flex;padding-right:12px;") 
+                    div(style="width:200px;") In Reserve:   
+                    input(type="range" min="0" max="100" value="100" disabled="true" style="width:100%")#defaultMoney.sliders
+                    input(type="text" value="100" style="color:black;margin-left:5px;width:30px;" readOnly)#totalText
+                div#stocks   
+                div#save
+                    br
+                    br
+                    br
+                    input(type="button" id="saveStocks" value="Save").btn.btn-primary
+            div#mmrightpanel
+                div#chart(style="height: 400px;")
+        script(src="https://code.highcharts.com/highcharts.js")
+        script(src="https://code.highcharts.com/highcharts-3d.js")
+        script(src="https://code.highcharts.com/modules/exporting.js")
+        script(src="../public/javascripts/moneyManagement.js")
+        br
+        br
+        br
+        footer#footer
+            hr
+            copyright &copy; 2017 CS3750 Project 4

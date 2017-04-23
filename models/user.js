@@ -22,17 +22,10 @@ const UserSchema = mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    chats: [{
-        chat_timestamp: {
-            type: Date,
-            default: Date.now
-        },
-        chat_from: {
-            type: String
-        },
-        chat_body: {
-            type: String
-        }
+    stocks: [{
+        fullname: String,
+        stock: String,
+        percent: Number   
     }]
 });
 

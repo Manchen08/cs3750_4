@@ -19,13 +19,14 @@ router.get('/login', (req, res, next) => {
 });
 
 router.post('/login', (req, res, next) => {
-
-  passport.authenticate('local', {
-    successRedirect: '/chatroom', // Remember to change redirect.
-    failureRedirect: '/users/login',
-    failureFlash: true
-  })(req, res, next);
-
+    var re = /^[0-9A-Z-_]+$/i;
+    if(re.test(req.body.username)){
+        passport.authenticate('local', {
+            successRedirect: '/management', // Remember to change redirect.
+            failureRedirect: '/users/login',
+            failureFlash: true
+        })(req, res, next);
+    }
 });
 
 // Register Form

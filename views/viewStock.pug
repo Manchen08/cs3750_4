@@ -1,0 +1,42 @@
+extends layout
+
+block content
+    link(href='../public/stylesheets/management.css', rel='stylesheet')
+    include ./includes/messages.pug 
+    div#titleAddStock
+        h2 View Stocks
+
+    head
+        link(href='stylesheets/snippet.css', rel='stylesheet')
+        script(src="https://code.highcharts.com/stock/highstock.js")
+        script(src="../public/javascripts/markitQuoteService.js")
+        script(src="http://code.jquery.com/ui/1.12.0/jquery-ui.js")
+        script(src='../public/javascripts/viewStock.js')
+    body
+
+        div#myChart
+        <div id="chart1" class="chart-area" >
+            <div class="aspect-ratio" ></div>
+            <div class="chart-wrapper" >
+                <div class="chart" ></div>
+        </div>
+            div.container
+                each stock in stocks
+                    br
+                    hr#viewStock
+                    br
+                    script.
+                        var stockDiv = document.createElement('div');
+                        var stock = {stock: '#{stock.stock}'};
+                        stockDiv.className = 'chart';
+                        //stockDiv.id = 'stockChart'
+                        document.getElementsByClassName('container')[0].appendChild(stockDiv);
+                        var sym = stock.stock.toString();
+                        var dur = 3650;
+                        //new createGraph(sym, stockDiv);
+                        new Markit.InteractiveChartApi(sym, dur, stockDiv);
+    footer
+      hr
+      copyright &copy; 2017 CS3750 Project 4
+
+                    

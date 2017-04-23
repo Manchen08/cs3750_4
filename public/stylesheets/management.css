@@ -1,0 +1,67 @@
+#mmpanels {
+    display:flex;
+    justify-content: space-between;
+}
+
+#mmleftpanel{
+    width:45vw;
+    
+}
+
+#mmrightpanel{
+    width:45vw;
+    height: 50vh;
+    
+}
+#stocks{
+    height:50vh;
+    max-height:50vh;
+    overflow-x:hidden;
+    overflow-y:auto;
+}
+
+.moneySliders{
+    width:60%;
+}
+.rangeText{
+    width:30px;
+    margin-left:5px;
+    color:black;
+}
+.stockItem{
+    display:flex;
+}
+.stockTitle{
+    width:200px;
+}
+#stocks{
+    color: darkgrey;
+    height:20vh;
+    
+}
+#title{
+    width: 100%;
+}
+
+#saveStocks{
+    width:150px;
+    background-color: darkturquoise;
+    border-color: white;
+    color: black;
+    
+}
+
+#username{
+color: blue;
+
+}
+
+#titleAddStock{
+color: darkturquoise;
+
+}
+
+#titleManagement{
+color: darkturquoise;
+
+}

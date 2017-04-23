@@ -1,9 +1,9 @@
 extends layout
 
 block content
+    include ./includes/messages.pug 
     .container
         h1 Login
-        include ./includes/messages.pug
         form(method='POST' action='/users/login')
             div.form-group
                 label(for='username') Username:
@@ -12,3 +12,6 @@ block content
                 label(for='password') Password:
                 input#password.form-control(type='password', placeholder='*****' name='password')
             button.btn.btn-primary(type='submit') Log in 
+        footer
+            hr
+            copyright &copy; 2017 CS3750 Project 4

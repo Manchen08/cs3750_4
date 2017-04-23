@@ -1,6 +1,9 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: black;
+  color:#d6d8db;
+  
 }
 
 a {
@@ -55,4 +58,60 @@ a {
     border-color: #ebccd1;
     border-radius: 4px;
     text-align: center;
+}
+.navbar.navbar{
+    background-color: darkgrey;
+    border-color: white;
+    border-width: 3px; 
+    border-style: groove;
+}
+ a.navbar-brand{
+     color: black;
+ }
+ ul.nav.navbar-nav a{
+     color:black;
+     font-size: 16px;
+ }
+ #chart{
+    
+ }
+ button.btn.btn-primary{
+     background-color: darkturquoise;
+     border-color: white;
+     color: black;
+     width: 150px;
+ }
+ input#username, input#password, input#pwd,
+ input#email.form-control, input#uName.form-control,
+ input#lName.form-control, input#fName.form-control
+  {
+     border-color: darkturquoise;
+     border-width: 2px;
+     border-radius: 7px;
+ }
+ a.btn.btn-default.btn-sm{
+     background-color: darkgrey;
+     border-color: darkturquoise;
+     color:black;
+ }
+input#stock{
+     border-color: darkturquoise;
+     border-width: 2px;
+     height: 40px;
+     width:250px;
+     border-radius: 7px;
+     color:black;
+}
+.ui-menu-item:hover{
+    color:hotpink;
+}
+#footer{
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+}
+hr#viewStock{
+    border-color: darkturquoise;
 }

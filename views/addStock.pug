@@ -1,0 +1,52 @@
+extends layout
+
+block content        
+    
+    link(href='../public/stylesheets/management.css', rel='stylesheet')
+    include ./includes/messages.pug 
+    div#titleAddStock
+        h2 Add Stocks
+        br
+    head
+        link(href='stylesheets/style.css', rel='stylesheet')
+        script(src="https://code.highcharts.com/stock/highstock.js")
+        script(src="../public/javascripts/markitQuoteService.js")
+        script(src="../public/javascripts/addStock.js")
+        script(src="http://code.jquery.com/ui/1.12.0/jquery-ui.js")
+        //script.
+            $(function(){
+                var sym = 'MSFT';//$.url().param('symbol') || 'AAPL';
+                var dur = 3650; //$.url().param('duration') || 3650;
+                new Markit.InteractiveChartApi(sym, dur);
+            });
+    body
+            div.container
+                form(method='post' action='/saveStock')
+                    div.form-group
+                        label(for='stock') Stock Symbol
+                        br
+                        input#stock(type="text" placeholder="type to search stocks" name="stock")
+                        input#txtName(type="hidden" name="txtName")
+                        input#symName(type="hidden" name="symName")
+                        br
+                        br
+                        br
+                        br
+                        br
+                        br
+                        br
+                        br
+                        br
+                        br
+                        br
+                        br
+                       
+                    button.btn.btn-primary(type='submit') Save
+                    footer#footer
+                        hr
+                        br
+                        br
+                        copyright &copy; 2017 CS3750 Project 4
+                //div#chartDemoContainer
+
+                
